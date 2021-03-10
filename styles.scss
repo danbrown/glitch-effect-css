@@ -1,0 +1,86 @@
+$bgcolor: #000;
+$glitch-color-1: rgb(212, 0, 255);
+$glitch-color-2: rgba(255, 0, 149, 0.986);
+$glitch-color-3: rgb(0, 255, 255);
+
+body {
+  background: $bgcolor;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  color: #e9e9e9;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.glitch {
+  font-size: 8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  position: relative;
+
+  text-shadow: 0.05em 0 0 $glitch-color-1, -0.025em -0.05em 0 $glitch-color-2,
+    0.025em 0.05em 0 $glitch-color-3;
+
+  animation: glitch 400ms ease infinite;
+
+  span {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    &:first-child {
+      animation: glitch 650ms infinite;
+      clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+      transform: translate(-0.025em, -0.0125em);
+      opacity: 0.8;
+    }
+
+    &:last-child {
+      animation: glitch 375ms infinite;
+      clip-path: polygon(0 80%, 100% 20%, 100% 100%, 0 100%);
+      transform: translate(0.0125em, 0.025em);
+      opacity: 0.8;
+    }
+  }
+}
+
+/* https://web.dev/prefers-reduced-motion/#(bonus)-forcing-reduced-motion-on-all-websites */
+
+@keyframes glitch {
+  0%,
+  14% {
+    text-shadow: 0.05em 0 0 $glitch-color-1, -0.05em -0.025em 0 $glitch-color-2,
+      -0.025em 0.05em 0 $glitch-color-3;
+  }
+
+  15%,
+  49% {
+    text-shadow: -0.05em -0.025em 0 $glitch-color-1,
+      0.025em 0.025em 0 $glitch-color-2, -0.05em -0.05em 0 $glitch-color-3;
+  }
+
+  50%,
+  99% {
+    text-shadow: 0.025em 0.05em 0 $glitch-color-1, 0.05em 0 0 $glitch-color-2,
+      0 -0.05em 0 $glitch-color-3;
+  }
+
+  100% {
+    text-shadow: -0.025em 0 0 $glitch-color-1,
+      -0.025em -0.025em 0 $glitch-color-2, -0.025em -0.05em 0 $glitch-color-3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}
